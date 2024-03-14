@@ -170,6 +170,7 @@ func (c *Cli) PullImage(ctx context.Context, image, platform string) error {
 }
 
 func (c *Cli) PushImage(ctx context.Context, image, platform string) error {
+	fmt.Printf("Push image: %+v\n", image)
 	pushOut, err := c.cli.ImagePush(ctx, image, types.ImagePushOptions{
 		RegistryAuth: c.auth,
 		Platform:     platform,
