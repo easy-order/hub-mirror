@@ -16,6 +16,7 @@ var (
 	content    = pflag.StringP("content", "", "", "原始镜像，格式为：{ \"platform\": \"\", \"hub-mirror\": [] }")
 	maxContent = pflag.IntP("maxContent", "", 11, "原始镜像个数限制")
 	repository = pflag.StringP("repository", "", "", "推送仓库地址，为空默认为 hub.docker.com")
+	namespace  = pflag.StringP("namespace", "", "", "推送仓库命名空间，没有留空")
 	username   = pflag.StringP("username", "", "", "仓库用户名")
 	password   = pflag.StringP("password", "", "", "仓库密码")
 	outputPath = pflag.StringP("outputPath", "", "output.md", "结果输出路径")
@@ -62,7 +63,7 @@ func main() {
 		go func() {
 			defer wg.Done()
 
-			output, err := cli.PullTagPushImage(context.Background(), source, hubMirrors.Platform)
+			output, err := cli.PullTagPushImage(context.Background(), source, hubMirrors.Platform, *namespace)
 			if err != nil {
 				fmt.Println(source, "转换异常: ", err)
 				return
